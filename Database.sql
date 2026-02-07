@@ -18,3 +18,5 @@ CREATE TABLE feedback (
  message TEXT,
  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE history ADD calc_type VARCHAR(20);
