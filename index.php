@@ -17,12 +17,12 @@
       justify-content: space-between;
       align-items: center;
       padding: 0 50px;
-      background: rgba(0,0,0,0.5); /* 50% transparent black strip */
+      background: rgba(0,0,0,0.5);
       color: #fff;
       position: fixed;
       top: 0;
       width: 100%;
-      height: 100px; /* larger strip size */
+      height: 100px;
       z-index: 1000;
       backdrop-filter: blur(6px);
     }
@@ -34,7 +34,7 @@
     nav ul {
       list-style: none;
       display: flex;
-      gap: 40px;
+      gap: 35px;
       margin: 0;
       padding: 0;
     }
@@ -49,7 +49,8 @@
       padding-bottom: 5px;
     }
 
-    nav ul li a:hover {
+    nav ul li a:hover,
+    nav ul li a.active {
       color: #c8e6c9;
       border-bottom: 2px solid #c8e6c9;
     }
@@ -57,7 +58,7 @@
     /* Hero Section */
     #home {
       height: 100vh;
-      background: url('background.jpg') center/cover no-repeat; /* replace with your image */
+      background: url('background.jpg') center/cover no-repeat;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -65,7 +66,6 @@
       position: relative;
     }
 
-    /* Middle transparent box */
     .overlay-box {
       background: rgba(255,255,255,0.85);
       padding: 50px;
@@ -103,9 +103,66 @@
       transform: translateY(-2px);
     }
 
-    /* Other Sections */
-    section {
+    /* About Us Section */
+    #about {
       height: 100vh;
+      background: #f1f8e9;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    #about h2 {
+      color: #2e7d32;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    .team-member {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .team-member:hover {
+      transform: translateY(-5px);
+    }
+
+    .team-member img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .team-member h3 {
+      margin: 10px 0 5px;
+      color: #1565c0;
+    }
+
+    .team-member p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    /* Contact Section */
+    #contact {
+      height: 100vh;
+      background: #e8f5e9;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -114,10 +171,10 @@
       padding: 40px;
     }
 
-    #about { background: #f1f8e9; }
-    #contact { background: #e8f5e9; }
-
-    h2 { color: #2e7d32; }
+    #contact h2 {
+      color: #2e7d32;
+      margin-bottom: 20px;
+    }
 
     footer {
       text-align: center;
@@ -136,6 +193,11 @@
       nav ul { gap: 20px; }
       nav ul li a { font-size: 0.9rem; }
       .overlay-box h1 { font-size: 2rem; }
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .team-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -143,7 +205,7 @@
 
   <!-- Navbar -->
   <header>
-    <img src="logo.png" alt="Carbon Tracker Logo"> <!-- replace with your logo -->
+    <img src="logo.png" alt="Carbon Tracker Logo">
     <nav>
       <ul>
         <li><a href="#home">Home</a></li>
@@ -156,7 +218,7 @@
     </nav>
   </header>
 
-  <!-- Home Section with overlay box -->
+  <!-- Home Section -->
   <section id="home">
     <div class="overlay-box">
       <h1>🌍 Carbon Footprint Tracker</h1>
@@ -165,28 +227,45 @@
     </div>
   </section>
 
-  <!-- About Section -->
+  <!-- About Us Section -->
   <section id="about">
-    <h2>Why use this tracker?</h2>
-    <ul>
-      <li>Understand your carbon impact</li>
-      <li>Improve eco habits</li>
-      <li>Reduce energy usage</li>
-      <li>Help the environment</li>
-    </ul>
+    <h2>Meet Our Team</h2>
+    <div class="team-grid">
+      <div class="team-member">
+        <img src="member1.jpg" alt="Team Member 1">
+        <h3>Rupali</h3>
+        <p>Project Lead — Passionate about sustainability and driving innovation in eco‑tech.</p>
+      </div>
+      <div class="team-member">
+        <img src="member2.jpg" alt="Team Member 2">
+        <h3>Member 2</h3>
+        <p>Developer — Expert in Python and AI, building smart tracking algorithms.</p>
+      </div>
+      <div class="team-member">
+        <img src="member3.jpg" alt="Team Member 3">
+        <h3>Member 3</h3>
+        <p>Designer — Focused on creating user‑friendly and visually appealing interfaces.</p>
+      </div>
+      <div class="team-member">
+        <img src="member4.jpg" alt="Team Member 4">
+        <h3>Member 4</h3>
+        <p>Research Analyst — Provides insights on carbon data and eco‑friendly practices.</p>
+      </div>
+    </div>
   </section>
 
   <!-- Contact Section -->
   <section id="contact">
     <h2>Contact Us</h2>
-    <p>Email: <a href="mailto:support@carbontracker.com">support@carbontracker.com</a></p>
-    <p>Phone: +91-0000000000</p>
-    <p>Location: India</p>
-  </section>
+    <form action="submit_contact.php" method="POST" style="max-width:600px; width:100%; text-align:left;">
+      <label for="name">Name:</label><br>
+      <input type="text" id="name" name="name" required 
+             style="width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc;"><br>
 
-  <footer>
-    © 2026 Carbon Tracker | Designed with care for the planet 🌱
-  </footer>
+      <label for="email">Email:</label><br>
+      <input type="email" id="email" name="email" required 
+             style="width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc;"><br>
 
-</body>
-</html>
+      <label for="phone">Phone:</label><br>
+      <input type="tel" id="phone" name="phone" 
+             style
