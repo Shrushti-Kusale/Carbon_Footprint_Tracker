@@ -3,11 +3,10 @@
 <div class="card">
 <h2>🌍 Emission Map by City</h2>
 <p>
-Green = Low emission | Orange = Medium | Red = High emission<br>
-🔴 Red AQI markers show highly polluted cities.
+Map shows average carbon emissions across cities.
 </p>
 
-<div id="map" style="height:500px;"></div>
+<div id="map" style="height:500px; position:relative;"></div>
 </div>
 
 <link rel="stylesheet"
@@ -24,10 +23,6 @@ JOIN users ON users.id = history.user_id
 GROUP BY users.city
 ");
 
-if(!$q){
-    die("Query error: ".$conn->error);
-}
-
 $cities = [];
 
 while($row = $q->fetch_assoc()){
@@ -36,19 +31,35 @@ while($row = $q->fetch_assoc()){
 }
 ?>
 
+<style>
+.pulse-pin::after {
+    content:'';
+    position:absolute;
+    width:24px;
+    height:24px;
+    background:rgba(0,150,0,0.25);
+    border-radius:50%;
+    top:0;
+    left:0;
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform:scale(1); opacity:0.6; }
+    100% { transform:scale(2); opacity:0; }
+}
+</style>
+
 <script>
 
-/* Map center */
 var map = L.map('map').setView([20.5937,78.9629],5);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
     attribution:'© OpenStreetMap'
 }).addTo(map);
 
-/* Emission data */
 let cities = <?= json_encode($cities) ?>;
 
-/* Coordinates */
 let coords = {
     "Mumbai":[19.0760,72.8777],
     "Pune":[18.5204,73.8567],
@@ -60,7 +71,7 @@ let coords = {
     "Ahmedabad":[23.0225,72.5714]
 };
 
-/* Add emission markers */
+/* Emission pins */
 cities.forEach(cityData => {
 
     let city = cityData.city;
@@ -69,21 +80,31 @@ cities.forEach(cityData => {
     if(coords[city]) {
 
         let color = "green";
-
-        if(avg > 20)
-            color = "red";
-        else if(avg >= 10)
-            color = "orange";
+        if(avg > 20) color = "red";
+        else if(avg >= 10) color = "orange";
 
         let icon = L.divIcon({
-            html: `<div style="
+            html: `
+            <div class="pulse-pin" style="
+                position:relative;
+                width:24px;
+                height:24px;
                 background:${color};
-                width:18px;
-                height:18px;
-                border-radius:50%;
+                border-radius:50% 50% 50% 0;
+                transform: rotate(-45deg);
                 border:2px solid white;
                 box-shadow:0 0 6px rgba(0,0,0,0.5);
-            "></div>`
+            ">
+                <div style="
+                    position:absolute;
+                    width:10px;
+                    height:10px;
+                    background:white;
+                    border-radius:50%;
+                    top:5px;
+                    left:5px;
+                "></div>
+            </div>`
         });
 
         L.marker(coords[city], {icon: icon})
@@ -95,43 +116,26 @@ cities.forEach(cityData => {
     }
 });
 
+/* Clean legend */
+let legend = document.createElement("div");
+legend.style.position = "absolute";
+legend.style.top = "12px";
+legend.style.right = "12px";
+legend.style.background = "white";
+legend.style.padding = "8px";
+legend.style.borderRadius = "8px";
+legend.style.fontSize = "12px";
+legend.style.boxShadow = "0 0 6px rgba(0,0,0,0.3)";
+legend.style.zIndex = "1000";
 
-/* ================= AQI MAJOR CITIES ================= */
+legend.innerHTML = `
+<b>Emission Level</b><br>
+<span style="color:green">Green</span> = Low<br>
+<span style="color:orange">Orange</span> = Medium<br>
+<span style="color:red">Red</span> = High
+`;
 
-/* Approximate AQI values */
-let aqiCities = [
-    {city:"Delhi", lat:28.7041, lng:77.1025, aqi:320},
-    {city:"Mumbai", lat:19.0760, lng:72.8777, aqi:180},
-    {city:"Kolkata", lat:22.5726, lng:88.3639, aqi:210},
-    {city:"Chennai", lat:13.0827, lng:80.2707, aqi:140},
-    {city:"Bangalore", lat:12.9716, lng:77.5946, aqi:120},
-    {city:"Hyderabad", lat:17.3850, lng:78.4867, aqi:160}
-];
-
-/* AQI red markers */
-aqiCities.forEach(c => {
-
-    let icon = L.divIcon({
-        html: `<div style="
-            background:red;
-            width:14px;
-            height:14px;
-            border-radius:50%;
-            border:2px solid white;
-            box-shadow:0 0 8px rgba(255,0,0,0.8);
-        "></div>`
-    });
-
-    L.marker([c.lat, c.lng], {icon: icon})
-    .addTo(map)
-    .bindPopup(
-        `<b>${c.city}</b><br>
-         AQI Level: ${c.aqi}<br>
-         <span style="color:red">
-         High Pollution Area
-         </span>`
-    );
-});
+document.getElementById("map").appendChild(legend);
 
 </script>
 
