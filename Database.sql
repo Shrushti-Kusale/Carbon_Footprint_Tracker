@@ -1,0 +1,20 @@
+Database Name: carbon_tracker
+CREATE TABLE users (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ name VARCHAR(100),
+ username VARCHAR(50) UNIQUE,
+ password VARCHAR(100)
+);
+
+CREATE TABLE history (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ user_id INT,
+ footprint FLOAT,
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE feedback (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ message TEXT,
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
