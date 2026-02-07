@@ -1,233 +1,209 @@
 <?php include "header.php"; ?>
 
-<div class="card">
-<h2>🌍 Daily Carbon Footprint Survey (India)</h2>
+<?php
+$type = $_GET['type'] ?? 'individual';
+?>
 
-<!-- Progress bar -->
-<div style="background:#ddd;height:10px;border-radius:5px;margin-bottom:20px;">
-<div id="progress" style="height:10px;background:#2e7d32;width:16%;border-radius:5px;"></div>
-</div>
+<div class="card">
+<h2>Carbon Footprint Calculator</h2>
 
 <form action="save_result.php" method="post">
-    
-<!-- STEP 1 Electricity -->
-<div class="step">
-<h3>⚡ Step 1: Home Electricity Usage</h3>
 
-<label>AC usage in summer?</label>
+<input type="hidden" name="calc_type" value="<?=$type?>">
+
+<!-- ================= INDIVIDUAL ================= -->
+<div style="<?= $type=='individual' ? '' : 'display:none' ?>">
+
+<h3>Individual Survey</h3>
+
+<h4>⚡ Electricity Usage</h4>
+
+AC usage:
 <select name="ac">
 <option value="1">Rarely</option>
-<option value="3">4–6 hours/day</option>
-<option value="6">8+ hours/day</option>
+<option value="3">2–4 hrs/day</option>
+<option value="6">5–8 hrs/day</option>
 <option value="10">Whole night</option>
-</select>
+</select><br><br>
 
-<label>Fans & lights usage?</label>
+Fan & lights usage:
 <select name="fan">
 <option value="2">Low usage</option>
 <option value="5">Normal usage</option>
 <option value="8">Heavy usage</option>
-</select>
+</select><br><br>
 
-<label>Water heater (geyser) usage?</label>
+Geyser usage:
 <select name="geyser">
 <option value="0">Rarely</option>
 <option value="2">Winter only</option>
-<option value="4">Daily usage</option>
+<option value="4">Daily</option>
 </select>
 
-<label>Refrigerator usage?</label>
-<select name="fridge">
-<option value="1">Small fridge</option>
-<option value="2">Medium fridge</option>
-<option value="3">Large fridge</option>
-</select>
+<hr>
 
-<label>Washing machine usage?</label>
-<select name="washing">
-<option value="0.2">Once a week</option>
-<option value="0.5">2–3 times/week</option>
-<option value="1">Daily usage</option>
-</select>
+<h4>🚗 Travel Habits</h4>
 
-<button type="button" onclick="nextStep()">Next →</button>
-</div>
-
-<!-- STEP 2 Travel -->
-<div class="step" style="display:none">
-<h3>🚗 Step 2: Daily Travel</h3>
-
-<label>Transport modes you use?</label>
-<p style="font-size:14px;color:gray">(Select all that apply)</p>
-
-<label><input type="checkbox" name="vehicle[]" value="car"> Car (alone)</label><br>
-<label><input type="checkbox" name="vehicle[]" value="carpool"> Carpool</label><br>
 <label><input type="checkbox" name="vehicle[]" value="bike"> Two-wheeler</label><br>
 <label><input type="checkbox" name="vehicle[]" value="bus"> Bus</label><br>
 <label><input type="checkbox" name="vehicle[]" value="train"> Metro/Train</label><br>
-<label><input type="checkbox" name="vehicle[]" value="auto"> Auto-rickshaw</label><br>
-<label><input type="checkbox" name="vehicle[]" value="cycle"> Walk/Cycle</label>
+<label><input type="checkbox" name="vehicle[]" value="car"> Car</label>
 
 <br><br>
 
-<label>Total travel time per day?</label>
+Travel time:
 <select name="travel">
 <option value="5">Less than 15 min</option>
-<option value="10">15–30 min</option>
-<option value="20">30–60 min</option>
-<option value="30">More than 1 hour</option>
+<option value="15">15–30 min</option>
+<option value="30">More than 30 min</option>
 </select>
 
-<br><br>
+<hr>
 
-<label>How many days per week do you travel?</label>
-<select name="travel_days">
-<option value="3">3 days</option>
-<option value="5">5 days</option>
-<option value="6">6 days</option>
-<option value="7">Every day</option>
-</select>
+<h4>🗑 Waste & Recycling</h4>
 
-<br><br>
-
-<label>Work/Study from home days per week?</label>
-<select name="wfh">
-<option value="0">None</option>
-<option value="1">1 day</option>
-<option value="2">2 days</option>
-<option value="3">3+ days</option>
-</select>
-
-<div style="display:flex;gap:10px;">
-<button type="button" style="flex:1" onclick="prevStep()">← Back</button>
-<button type="button" style="flex:1" onclick="nextStep()">Next →</button>
-</div>
-</div>
-
-<!-- STEP 3 Waste -->
-<div class="step" style="display:none">
-<h3>🗑 Step 3: Waste Handling</h3>
-
-<label>Household waste amount?</label>
+Waste generated:
 <select name="waste">
-<option value="0.2">Very low</option>
-<option value="0.5">Normal</option>
+<option value="0.3">Low</option>
+<option value="0.6">Normal</option>
 <option value="1">High</option>
-</select>
+</select><br><br>
 
-<label>Do you separate wet & dry waste?</label>
+Do you recycle?
 <select name="recycle">
 <option value="-0.2">Yes</option>
 <option value="0">Sometimes</option>
 <option value="0.3">No</option>
 </select>
 
-<label>Do you compost kitchen waste?</label>
-<select name="compost">
-<option value="-0.2">Yes</option>
-<option value="0">No</option>
-</select>
+<hr>
 
-<div style="display:flex;gap:10px;">
-<button style="flex:1" type="button" onclick="prevStep()">← Back</button>
-<button style="flex:1" type="button" onclick="nextStep()">Next →</button>
-</div>
-</div>
+<h4>🍽 Food Habits</h4>
 
-<!-- STEP 4 Food Habit -->
-<div class="step" style="display:none">
-<h3>🍽 Step 4: Food Habit</h3>
-
-<label>Your diet type?</label>
+Diet type:
 <select name="diet">
 <option value="0.2">Vegetarian</option>
-<option value="0.4">Eggetarian</option>
-<option value="0.6">Mixed diet</option>
-<option value="1">Heavy meat consumption</option>
-</select>
+<option value="0.6">Mixed</option>
+<option value="1">Heavy meat</option>
+</select><br><br>
 
-<label>How often do you order food online?</label>
+Food delivery frequency:
 <select name="food">
 <option value="0.1">Rarely</option>
 <option value="0.3">Few times/week</option>
-<option value="0.6">Almost daily</option>
+<option value="0.6">Frequently</option>
 </select>
 
-<div style="display:flex;gap:10px;">
-<button style="flex:1" type="button" onclick="prevStep()">← Back</button>
-<button style="flex:1" type="button" onclick="nextStep()">Next →</button>
-</div>
-</div>
+<hr>
 
-<!-- STEP 5 Shopping -->
-<div class="step" style="display:none">
-<h3>🛍 Step 5: Shopping & Consumption</h3>
+<h4>🛍 Shopping Habits</h4>
 
-<label>How often do you buy new clothes?</label>
-<select name="clothes">
-<option value="0.1">Only when needed</option>
-<option value="0.3">Few times/year</option>
-<option value="0.6">Monthly shopping</option>
-</select>
-
-<label>Online shopping frequency?</label>
+Online shopping frequency:
 <select name="shopping">
 <option value="0.1">Rarely</option>
 <option value="0.3">Monthly</option>
 <option value="0.6">Weekly</option>
-</select>
+</select><br><br>
 
-<label>Do you carry reusable shopping bags?</label>
+Carry reusable bags?
 <select name="plastic">
 <option value="-0.2">Always</option>
 <option value="0">Sometimes</option>
 <option value="0.3">Never</option>
 </select>
 
-<div style="display:flex;gap:10px;">
-<button style="flex:1" type="button" onclick="prevStep()">← Back</button>
-<button style="flex:1" type="button" onclick="nextStep()">Next →</button>
-</div>
 </div>
 
-<!-- STEP 6 Confirm -->
-<div class="step" style="display:none">
-<h3>✅ Confirm & Calculate</h3>
+<!-- ================= HOUSEHOLD ================= -->
+<div style="<?= $type=='household' ? '' : 'display:none' ?>">
 
-<p>Click calculate to view your carbon footprint.</p>
+<h3>Household Survey</h3>
 
-<div style="display:flex;gap:10px;">
-<button style="flex:1" type="button" onclick="prevStep()">← Back</button>
-<button style="flex:1" type="submit">Calculate Result</button>
+Family members:
+<input type="number" name="members" min="1"><br><br>
+
+Number of AC units:
+<select name="ac_units">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3 or more</option>
+</select><br><br>
+
+Fridges:
+<select name="fridge">
+<option value="1">1 fridge</option>
+<option value="2">2 fridges</option>
+</select><br><br>
+
+Washing machine usage:
+<select name="washing">
+<option value="0.3">Weekly</option>
+<option value="0.6">Few times/week</option>
+<option value="1">Daily</option>
+</select><br><br>
+
+Vehicles owned:
+<select name="vehicles">
+<option value="1">1 vehicle</option>
+<option value="2">2 vehicles</option>
+<option value="3">3 or more</option>
+</select><br><br>
+
+Vehicle fuel type:
+<select name="fuel">
+<option value="2">Petrol</option>
+<option value="2.5">Diesel</option>
+<option value="1.2">CNG</option>
+<option value="0.5">Electric</option>
+</select><br><br>
+
+Cooking fuel:
+<select name="cooking">
+<option value="1.5">LPG</option>
+<option value="1">Induction/Electric</option>
+<option value="1.2">PNG Gas</option>
+<option value="2.5">Firewood</option>
+</select><br><br>
+
+Household waste:
+<select name="house_waste">
+<option value="0.5">Low</option>
+<option value="1">Normal</option>
+<option value="2">High</option>
+</select><br><br>
+
+Waste segregation:
+<select name="segregation">
+<option value="-0.3">Yes</option>
+<option value="0">Sometimes</option>
+<option value="0.4">No</option>
+</select><br><br>
+
+Solar energy usage:
+<select name="solar">
+<option value="-2">Yes</option>
+<option value="0">No</option>
+</select><br><br>
+
+Home size:
+<select name="home_size">
+<option value="1">Small apartment</option>
+<option value="2">Medium home</option>
+<option value="3">Large house</option>
+</select>
+
 </div>
+
+<hr>
+
+<div style="text-align:center;margin-top:20px;">
+<button type="submit"
+style="padding:14px 25px;font-size:16px;background:#2e7d32;color:white;border:none;border-radius:6px;cursor:pointer;">
+Calculate Carbon Footprint
+</button>
 </div>
 
 </form>
 </div>
-
-<script>
-let step = 0;
-let steps = document.querySelectorAll(".step");
-let progress = document.getElementById("progress");
-
-function updateProgress(){
-    let percent = ((step+1)/steps.length)*100;
-    progress.style.width = percent + "%";
-}
-
-function nextStep(){
-    steps[step].style.display="none";
-    step++;
-    steps[step].style.display="block";
-    updateProgress();
-}
-
-function prevStep(){
-    steps[step].style.display="none";
-    step--;
-    steps[step].style.display="block";
-    updateProgress();
-}
-</script>
 
 <?php include "footer.php"; ?>
