@@ -1,4 +1,5 @@
 CREATE DATABASE carbon_tracker;
+USE carbon_tracker;
 CREATE TABLE users (
  id INT AUTO_INCREMENT PRIMARY KEY,
  name VARCHAR(100),
@@ -20,3 +21,4 @@ CREATE TABLE feedback (
 );
 
 ALTER TABLE history ADD calc_type VARCHAR(20);
+ALTER TABLE users ADD city VARCHAR(100);
