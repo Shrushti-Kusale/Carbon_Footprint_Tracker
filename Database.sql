@@ -1,4 +1,5 @@
 Database Name: carbon_tracker
+CREATE DATABASE carbon_tracker;
 CREATE TABLE users (
  id INT AUTO_INCREMENT PRIMARY KEY,
  name VARCHAR(100),
