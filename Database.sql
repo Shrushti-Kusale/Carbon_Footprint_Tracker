@@ -19,6 +19,6 @@ CREATE TABLE feedback (
  message TEXT,
  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
+ALTER TABLE feedback ADD rating INT NOT NULL;
 ALTER TABLE history ADD calc_type VARCHAR(20);
 ALTER TABLE users ADD city VARCHAR(100);
