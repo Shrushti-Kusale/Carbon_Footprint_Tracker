@@ -22,3 +22,13 @@ CREATE TABLE feedback (
 ALTER TABLE feedback ADD rating INT NOT NULL;
 ALTER TABLE history ADD calc_type VARCHAR(20);
 ALTER TABLE users ADD city VARCHAR(100);
+
+CREATE TABLE contact_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(120),
+    city VARCHAR(100),
+    phone VARCHAR(20),
+    message TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

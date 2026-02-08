@@ -24,7 +24,6 @@ background:rgba(0,0,0,0.25);
 z-index:-1;
 }
 
-/* Layout */
 .calculator-section{
 display:none;
 max-width:900px;
@@ -57,9 +56,7 @@ padding:22px;
 text-align:center;
 }
 
-form{
-padding:35px;
-}
+form{ padding:35px; }
 
 .section-title{
 margin:30px 0 15px;
@@ -69,9 +66,7 @@ border-left:5px solid #0093E9;
 padding-left:10px;
 }
 
-.form-group{
-margin-bottom:20px;
-}
+.form-group{ margin-bottom:20px; }
 
 .form-group label{
 display:block;
@@ -94,12 +89,17 @@ padding:12px 15px;
 border-radius:8px;
 }
 
-.checkbox-group label{
+.travel-option{
 display:flex;
 align-items:center;
 gap:10px;
-margin-bottom:8px;
+margin:8px 0;
 font-weight:normal;
+cursor:pointer;
+}
+
+.travel-option input{
+width:auto;
 }
 
 hr{
@@ -182,19 +182,27 @@ onclick="window.location.href='calculator_start.php'">
 <h3 class="section-title">Travel Habits</h3>
 
 <div class="form-group checkbox-group">
-<label>Vehicles used</label>
-<label><input type="checkbox" name="vehicle[]" value="bike"> Two-wheeler</label>
-<label><input type="checkbox" name="vehicle[]" value="bus"> Bus</label>
-<label><input type="checkbox" name="vehicle[]" value="train"> Metro/Train</label>
-<label><input type="checkbox" name="vehicle[]" value="car"> Car</label>
+<label>Select all transport modes you use</label>
+
+<label class="travel-option"><input type="checkbox" name="vehicle[]" value="1"><span>Walking / Cycling</span></label>
+<label class="travel-option"><input type="checkbox" name="vehicle[]" value="2"><span>Metro</span></label>
+<label class="travel-option"><input type="checkbox" name="vehicle[]" value="3"><span>Local Train</span></label>
+<label class="travel-option"><input type="checkbox" name="vehicle[]" value="4"><span>Bus</span></label>
+<label class="travel-option"><input type="checkbox" name="vehicle[]" value="5"><span>Auto-rickshaw</span></label>
+<label class="travel-option"><input type="checkbox" name="vehicle[]" value="4"><span>E-rickshaw</span></label>
+<label class="travel-option"><input type="checkbox" name="vehicle[]" value="6"><span>Two-wheeler</span></label>
+<label class="travel-option"><input type="checkbox" name="vehicle[]" value="7"><span>Cab / Taxi</span></label>
+<label class="travel-option"><input type="checkbox" name="vehicle[]" value="9"><span>Private Car</span></label>
+
 </div>
 
 <div class="form-group">
-<label>Travel time</label>
+<label>Average daily travel distance</label>
 <select name="travel">
-<option value="5">Less than 15 min</option>
-<option value="15">15–30 min</option>
-<option value="30">More than 30 min</option>
+<option value="2">Less than 5 km</option>
+<option value="5">5–15 km</option>
+<option value="8">15–30 km</option>
+<option value="12">More than 30 km</option>
 </select>
 </div>
 
@@ -217,50 +225,6 @@ onclick="window.location.href='calculator_start.php'">
 <option value="-0.2">Yes</option>
 <option value="0">Sometimes</option>
 <option value="0.3">No</option>
-</select>
-</div>
-
-<hr>
-
-<h3 class="section-title">Food Habits</h3>
-
-<div class="form-group">
-<label>Diet type</label>
-<select name="diet">
-<option value="0.2">Vegetarian</option>
-<option value="0.6">Mixed</option>
-<option value="1">Heavy meat</option>
-</select>
-</div>
-
-<div class="form-group">
-<label>Food delivery frequency</label>
-<select name="food">
-<option value="0.1">Rarely</option>
-<option value="0.3">Few times/week</option>
-<option value="0.6">Frequently</option>
-</select>
-</div>
-
-<hr>
-
-<h3 class="section-title">Shopping Habits</h3>
-
-<div class="form-group">
-<label>Online shopping frequency</label>
-<select name="shopping">
-<option value="0.1">Rarely</option>
-<option value="0.3">Monthly</option>
-<option value="0.6">Weekly</option>
-</select>
-</div>
-
-<div class="form-group">
-<label>Carry reusable bags?</label>
-<select name="plastic">
-<option value="-0.2">Always</option>
-<option value="0">Sometimes</option>
-<option value="0.3">Never</option>
 </select>
 </div>
 
@@ -368,9 +332,9 @@ const params = new URLSearchParams(window.location.search);
 const type = params.get("type");
 
 if(type === "household"){
-    document.getElementById("householdForm").style.display = "block";
+document.getElementById("householdForm").style.display = "block";
 }else{
-    document.getElementById("individualForm").style.display = "block";
+document.getElementById("individualForm").style.display = "block";
 }
 </script>
 
