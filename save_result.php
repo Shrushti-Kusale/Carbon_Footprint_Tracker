@@ -1,104 +1,118 @@
 <?php
 include "db.php";
 
-/* ------------------ INPUTS ------------------ */
+/* Calculator type */
+$type=$_POST['calc_type'] ?? 'individual';
 
-/* Electricity */
-$ac = $_POST['ac'];
-$fan = $_POST['fan'];
-$geyser = $_POST['geyser'];
+/* Vehicle emission factors */
+$vehicleFactor=[
+    "car"=>0.21,
+    "bike"=>0.1,
+    "bus"=>0.05,
+    "train"=>0.04 ];
 
-/* Travel */
-$vehicles = $_POST['vehicle'] ?? [];
-$travelTime = $_POST['travel'];
-$travelDays = $_POST['travel_days'];
-$wfh = $_POST['wfh'];
+$total=0;
 
-/* Waste */
-$waste = $_POST['waste'];
-$recycle = $_POST['recycle'];
-$compost = $_POST['compost'];
+/* ==============================
+   INDIVIDUAL CALCULATION
+============================== */
+if($type=="individual"){
 
-/* Food */
-$diet = $_POST['diet'];
-$food = $_POST['food'];
+    $ac=$_POST['ac'];
+    $fan=$_POST['fan'];
+    $geyser=$_POST['geyser'];
 
-/* Shopping */
-$clothes = $_POST['clothes'];
-$shopping = $_POST['shopping'];
-$plastic = $_POST['plastic'];
+    $vehicles=$_POST['vehicle'] ?? [];
+    $travelTime=$_POST['travel'];
 
-/* ------------------ EMISSION FACTORS ------------------ */
+    $waste=$_POST['waste'];
+    $recycle=$_POST['recycle'];
+    $diet=$_POST['diet'];
+    $food=$_POST['food'];
+    $shopping=$_POST['shopping'];
+    $plastic=$_POST['plastic'];
 
-$vehicleFactor = [
-    "car" => 0.21,
-    "carpool" => 0.12,
-    "bike" => 0.1,
-    "bus" => 0.05,
-    "train" => 0.04,
-    "auto" => 0.15,
-    "cycle" => 0
-];
+    /* Electricity */
+    $electricity=
+        ($ac*0.8)+
+        ($fan*0.05)+
+        ($geyser*0.5);
 
-/* ------------------ CALCULATIONS ------------------ */
+    /* Travel */
+    $transport=0;
+    foreach($vehicles as $vehicle){
+        if(isset($vehicleFactor[$vehicle])){
+            $transport+=$travelTime*
+                        $vehicleFactor[$vehicle]; }}
 
-/* Electricity emission */
-$electricity =
-    ($ac * 0.8) +
-    ($fan * 0.05) +
-    ($geyser * 0.5) +
-    ($fridge * 0.4) +
-    ($washing * 0.6);
+    /* Waste */
+    $wasteEmission=$waste+$recycle;
 
-/* Travel emission */
-$transport = 0;
+    /* Lifestyle */
+    $lifestyle=$diet+$food+
+               $shopping+$plastic;
 
-foreach($vehicles as $vehicle){
-    if(isset($vehicleFactor[$vehicle])){
-        $transport += $travelTime * $vehicleFactor[$vehicle];
-    }
-}
+    $total=
+        $electricity+
+        $transport+
+        $wasteEmission+
+        $lifestyle; }
 
-/* Weekly adjustment */
-$effectiveTravelDays = max(0, $travelDays - $wfh);
+/* ==============================
+   HOUSEHOLD CALCULATION
+============================== */
+else if($type=="household"){
 
-/* Convert to daily average */
-$transport = ($transport * $effectiveTravelDays) / 7;
+    $members=$_POST['members'];
+    $ac_units=$_POST['ac_units'];
+    $fridge=$_POST['fridge'];
+    $washing=$_POST['washing'];
+    $vehicles=$_POST['vehicles'];
+    $fuel=$_POST['fuel'];
+    $cooking=$_POST['cooking'];
+    $houseWaste=$_POST['house_waste'];
+    $segregation=$_POST['segregation'];
+    $solar=$_POST['solar'];
+    $home_size=$_POST['home_size'];
 
-/* Waste emission */
-$wasteEmission =
-    $waste +
-    $recycle +
-    $compost;
+    /* Electricity */
+    $electricity=
+        ($ac_units*5)+
+        ($fridge*2)+
+        ($washing*2)+
+        ($home_size*2);
 
-/* Food emission */
-$foodEmission =
-    $diet +
-    $food;
+    /* Transport */
+    $transport=$vehicles*$fuel;
 
-/* Shopping emission */
-$shoppingEmission =
-    $clothes +
-    $shopping +
-    $plastic;
+    /* Cooking */
+    $cookingEmission=$cooking;
 
-/* Total footprint */
-$total =
-    $electricity +
-    $transport +
-    $wasteEmission +
-    $foodEmission +
-    $shoppingEmission;
+    /* Waste */
+    $wasteEmission=
+        $houseWaste+$segregation;
 
-/* ------------------ SAVE RESULT ------------------ */
+    /* Household total */
+    $houseTotal=
+        $electricity+
+        $transport+
+        $cookingEmission+
+        $wasteEmission+
+        $solar;
 
-$conn->query("INSERT INTO history(user_id,footprint)
-VALUES(".$_SESSION['user']['id'].",$total)");
+    /* Per person */
+    $total=$houseTotal/max(1,$members); }
 
-/* Store result for result page */
-$_SESSION['last_result'] = round($total,2);
+/* ==============================
+   SAVE RESULT
+============================== */
 
-/* Redirect to result page */
+$conn->query("INSERT INTO history(user_id,footprint,calc_type)
+VALUES(".$_SESSION['user']['id'].",$total,'$type')");
+
+/* Store result */
+$_SESSION['last_result']=round($total,2);
+
+/* Redirect */
 header("location:result.php");
-exit();
-?>
+exit(); ?>

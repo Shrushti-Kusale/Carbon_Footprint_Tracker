@@ -5,12 +5,12 @@ $msg="";
 $error="";
 
 if(isset($_POST['save'])){
-
     $name=$_POST['name'];
     $username=$_POST['username'];
-    $password=$_POST['password']; // keep plain text
+    $password=$_POST['password']; // plain text as per setup
+    $city=$_POST['city'];
 
-    // Check if username exists
+    /* Check username */
     $check=$conn->prepare("SELECT id FROM users WHERE username=?");
     $check->bind_param("s",$username);
     $check->execute();
@@ -18,29 +18,24 @@ if(isset($_POST['save'])){
 
     if($res->num_rows>0){
         $error="Username already exists!";
-    } else {
-
+    }else{
         $stmt=$conn->prepare(
-            "INSERT INTO users(name,username,password) VALUES(?,?,?)"
+            "INSERT INTO users(name, username, password, city)
+             VALUES(?,?,?,?)"
         );
-        $stmt->bind_param("sss",$name,$username,$password);
+        $stmt->bind_param("ssss",$name,$username,$password,$city);
         $stmt->execute();
 
-        $msg="Account created! You can login now.";
-    }
-}
-?>
+        $msg="Account created! You can login now."; }} ?>
 
 <link rel="stylesheet" href="style.css">
 
 <style>
 body{
-    background:url("LoginSignup.png") no-repeat center center fixed;
-    background-size:cover;
-}
+    background:url("LoginSignup.jpeg") no-repeat center center fixed;
+    background-size:cover; }
 .card{
-    background:rgba(255,255,255,0.95);
-}
+    background:rgba(255,255,255,0.95); }
 </style>
 
 <div class="card" style="width:350px;margin:100px auto;text-align:center;">
@@ -52,6 +47,18 @@ body{
 <input name="name" placeholder="Full Name" required>
 <input name="username" placeholder="Username" required>
 <input type="password" name="password" placeholder="Password" required>
+
+<select name="city" required>
+<option value="">Select City</option>
+<option>Mumbai</option>
+<option>Pune</option>
+<option>Delhi</option>
+<option>Bangalore</option>
+<option>Chennai</option>
+<option>Hyderabad</option>
+<option>Kolkata</option>
+<option>Ahmedabad</option>
+</select>
 
 <button name="save">Create Account</button>
 </form>
