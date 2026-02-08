@@ -13,23 +13,97 @@ session_start();
 <link rel="stylesheet" href="assets/css/style.css">
 
 <style>
-body{
-margin:0;
-font-family:Times New Roman,sans-serif;
-scroll-behavior:smooth; }
+body {
+    margin: 0;
+    padding-top: 110px; /* Add space for fixed header */
+    font-family: Times New Roman, sans-serif;
+    scroll-behavior: smooth;
+}   
 
-nav{
-text-align:right;
-padding-right:20px; }
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 70px;
+    background: linear-gradient(135deg,rgba(34,139,34,0.95),rgba(46,125,50,0.95));
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: calc(100% - 140px); /* Account for padding */
+    min-height: 70px;
+    z-index: 9999;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(34,139,34,0.3);}
 
-nav a{
-text-decoration:none;
-color:#080588;
-margin:0 10px; }
+html {
+  scroll-padding-top: 120px;
+}
 
-nav a:hover{text-decoration:underline;}
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-shrink: 0; /* Prevents logo from shrinking */
+}
 
-.page-container{width:100%;margin:0 auto;padding:0;}
+.logo-container img {
+    height: 60px;
+    width: 60px;
+    object-fit: contain;
+    border-radius: 50%;
+    background: #ffffff;
+    padding: 5px;
+    border: 2px solid #fff;
+    transition: transform 0.3s ease;
+}
+
+.logo-container img:hover{
+    transform:scale(1.08); }
+
+.logo-text{
+    font-size:1.6rem;
+    font-weight:700; }
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:45px;
+    margin: 0;
+    padding: 0; }
+
+nav ul li a{
+    color:#fff;
+    text-decoration:none;
+    font-weight:500;
+    font-size:1.1rem;
+    padding:8px 0;
+    position:relative; }
+
+nav ul li a::after{
+    content:'';
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:0;
+    height:2px;
+    background:#a7f3d0;
+    transition:width 0.3s; }
+
+nav ul li a:hover::after,
+nav ul li a.active::after{
+    width:100%; }
+
+nav ul li a:hover{
+    color:#a7f3d0; }
+
+.page-container{width:100%;margin:0 auto;padding:0;position: relative;}
 
 section{
 position:relative;
@@ -46,7 +120,7 @@ position:absolute;
 top:0;left:0;
 width:100%;height:100%;
 object-fit:cover;
-z-index:1; }
+z-index:0; }
 
 section .section-inner{
 position:relative;
@@ -101,14 +175,43 @@ section{padding:20px 10px;}
 section .section-inner{padding:30px 20px;width:95%;}
 section .section-inner h2{font-size:1.8em;}
 section .section-inner p{font-size:1em;} }
+
+#welcome {
+  background: url('Welcome.jpeg') no-repeat center center/cover;
+  position: relative;
+}
+
+#about {
+  background: url('About.jpg') no-repeat center center/cover;
+  position: relative;
+}
+
+#result {
+  background: url('Result.jpg') no-repeat center center/cover;
+  position: relative;
+}
 </style>
 </head>
 
 <body>
+    <header>
+<div class="logo-container">
+    <img src="Logo.jpeg" alt="Carbon Tracker Logo">
+    <span class="logo-text">Carbon Footprint Tracker : EcoTrace</span>
+</div>
+
+<nav>
+  <ul>
+    <li><a href="#welcome" class="active">Home</a></li>
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#result">Result_Info</a></li>
+  </ul>
+</nav>
+
+</header>
 <div class="page-container">
 
 <section id="welcome">
-<img src="Welcome.jpeg" alt="Welcome" class="section-bg">
 <div class="section-inner">
 <h2>🌍 Carbon Footprint Tracker</h2>
 <p>Welcome <span class="highlight"><?= $_SESSION['user']['name'] ?? 'Guest' ?></span> 👋</p>
@@ -126,8 +229,6 @@ future for tomorrow.
 </section>
 
 <section id="about">
-<img src="About.jpg" alt="About Us" class="section-bg">
-
 <div class="section-inner">
 <h2>♻️ About Us</h2>
 
@@ -172,8 +273,6 @@ Even small daily improvements can significantly reduce global carbon emissions.
 </section>
 
 <section id="result">
-<img src="Result.jpg" alt="Results" class="section-bg">
-
 <div class="section-inner">
 <h2>📘 Understanding Your Carbon Footprint</h2>
 
