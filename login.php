@@ -4,7 +4,6 @@ include "db.php";
 $error="";
 
 if(isset($_POST['login'])){
-
     $username=$_POST['username'];
     $password=$_POST['password'];
 
@@ -19,22 +18,18 @@ if(isset($_POST['login'])){
         $_SESSION['user']=$result->fetch_assoc();
         header("Location: home.php");
         exit();
-    } else {
+    }else{
         $error="Login failed. Check username or password.";
-    }
-}
-?>
+    } }?>
 
 <link rel="stylesheet" href="style.css">
 
 <style>
 body{
-    background:url("LoginSignup.png") no-repeat center center fixed;
-    background-size:cover;
-}
+    background:url("LoginSignup.jpeg") no-repeat center center fixed;
+    background-size:cover; }
 .card{
-    background:rgba(255,255,255,0.95);
-}
+    background:rgba(255,255,255,0.95); }
 </style>
 
 <div class="card" style="width:350px;margin:100px auto;text-align:center;">
@@ -45,7 +40,6 @@ body{
 <form method="post">
 <input name="username" placeholder="Username" required>
 <input type="password" name="password" placeholder="Password" required>
-
 <button name="login">Login</button>
 </form>
 

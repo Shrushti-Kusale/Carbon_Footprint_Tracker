@@ -9,15 +9,13 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
+    box-sizing: border-box; }
 
 body {
     font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
     scroll-behavior: smooth;
     color: #1a1a1a;
-    line-height: 1.6;
-}
+    line-height: 1.6; }
 
 /* ---------- Navbar ---------- */
 header {
@@ -33,33 +31,28 @@ header {
     height: 80px;
     z-index: 1000;
     backdrop-filter: blur(10px);
-    box-shadow: 0 4px 30px rgba(34, 139, 34, 0.3);
-}
+    box-shadow: 0 4px 30px rgba(34, 139, 34, 0.3); }
 
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 15px;
-}
+    gap: 15px; }
 
 .logo-container img {
     height: 50px;
-    filter: brightness(1.1);
-}
+    filter: brightness(1.1); }
 
 .logo-text {
     font-size: 1.3rem;
     font-weight: 700;
-    letter-spacing: -0.5px;
-}
+    letter-spacing: -0.5px; }
 
 nav ul {
     list-style: none;
     display: flex;
     gap: 45px;
     margin: 0;
-    padding: 0;
-}
+    padding: 0; }
 
 nav ul li a {
     color: #fff;
@@ -69,8 +62,7 @@ nav ul li a {
     letter-spacing: 0.3px;
     transition: all 0.3s ease;
     padding: 8px 0;
-    position: relative;
-}
+    position: relative; }
 
 nav ul li a::after {
     content: '';
@@ -80,17 +72,14 @@ nav ul li a::after {
     width: 0;
     height: 2px;
     background: #a7f3d0;
-    transition: width 0.3s ease;
-}
+    transition: width 0.3s ease; }
 
 nav ul li a:hover::after,
 nav ul li a.active::after {
-    width: 100%;
-}
+    width: 100%; }
 
 nav ul li a:hover {
-    color: #a7f3d0;
-}
+    color: #a7f3d0; }
 
 /* ---------- Hero Section ---------- */
 #home {
@@ -101,8 +90,7 @@ nav ul li a:hover {
     align-items: center;
     text-align: center;
     position: relative;
-    overflow: hidden;
-}
+    overflow: hidden; }
 
 #home::before {
     content: '';
@@ -113,8 +101,8 @@ nav ul li a:hover {
     bottom: 0;
     /* Removed green overlay gradient */
     background: rgba(0, 0, 0, 0.25); /* Optional: subtle dark overlay for readability */
-    z-index: 1;
-}
+    z-index: 1; }
+    
 .overlay-box {
     position: relative;
     z-index: 2;
@@ -125,8 +113,7 @@ nav ul li a:hover {
     max-width: 800px;
     animation: fadeInUp 1s ease-out;
     backdrop-filter: blur(20px);
-    border: 2px solid rgba(129, 199, 132, 0.4);
-}
+    border: 2px solid rgba(129, 199, 132, 0.4); }
 
 .overlay-box h1 {
     font-size: 3.5rem;
@@ -137,15 +124,13 @@ nav ul li a:hover {
     margin-bottom: 20px;
     font-weight: 800;
     line-height: 1.2;
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
-}
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2)); }
 
 .overlay-box p {
     font-size: 1.3rem;
     margin-bottom: 40px;
     color: #f0fdf4;
-    font-weight: 400;
-}
+    font-weight: 400; }
 
 .cta-button {
     background: linear-gradient(135deg, #10b981, #0ea5e9);
@@ -159,14 +144,12 @@ nav ul li a:hover {
     transition: all 0.3s ease;
     box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
     text-decoration: none;
-    display: inline-block;
-}
+    display: inline-block; }
 
 .cta-button:hover {
     transform: translateY(-3px);
     box-shadow: 0 12px 30px rgba(16, 185, 129, 0.5);
-    background: linear-gradient(135deg, #059669, #0284c7);
-}
+    background: linear-gradient(135deg, #059669, #0284c7); }
 
 /* ---------- About Section ---------- */
 #about {
@@ -177,8 +160,7 @@ nav ul li a:hover {
     justify-content: center;
     align-items: center;
     padding: 100px 40px;
-    text-align: center;
-}
+    text-align: center; }
 
 #about h2 {
     font-size: 3rem;
@@ -187,23 +169,20 @@ nav ul li a:hover {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin-bottom: 20px;
-    font-weight: 800;
-}
+    font-weight: 800; }
 
 .section-subtitle {
     font-size: 1.2rem;
     color: #6b7280;
     margin-bottom: 60px;
-    max-width: 600px;
-}
+    max-width: 600px; }
 
 .team-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 40px;
     max-width: 1200px;
-    width: 100%;
-}
+    width: 100%; }
 
 .team-member {
     background: rgba(255, 255, 255, 0.9);
@@ -212,14 +191,12 @@ nav ul li a:hover {
     padding: 30px;
     transition: all 0.4s ease;
     border: 2px solid rgba(129, 199, 132, 0.3);
-    backdrop-filter: blur(10px);
-}
+    backdrop-filter: blur(10px); }
 
 .team-member:hover {
     transform: translateY(-10px);
     box-shadow: 0 20px 50px rgba(16, 185, 129, 0.25);
-    border-color: rgba(16, 185, 129, 0.5);
-}
+    border-color: rgba(16, 185, 129, 0.5); }
 
 .team-member img {
     width: 100%;
@@ -227,25 +204,21 @@ nav ul li a:hover {
     object-fit: cover;
     border-radius: 15px;
     margin-bottom: 20px;
-    transition: transform 0.3s ease;
-}
+    transition: transform 0.3s ease; }
 
 .team-member:hover img {
-    transform: scale(1.05);
-}
+    transform: scale(1.05); }
 
 .team-member h3 {
     margin: 15px 0 8px;
     color: #047857;
     font-size: 1.3rem;
-    font-weight: 700;
-}
+    font-weight: 700; }
 
 .team-member p {
     font-size: 1rem;
     color: #6b7280;
-    line-height: 1.6;
-}
+    line-height: 1.6; }
 
 /* ---------- Contact Section ---------- */
 #contact {
@@ -257,8 +230,7 @@ nav ul li a:hover {
     justify-content: center;
     align-items: center;
     padding: 100px 40px;
-    position: relative;
-}
+    position: relative; }
 
 #contact::before {
     content: '';
@@ -268,13 +240,11 @@ nav ul li a:hover {
     right: 0;
     bottom: 0;
     background: linear-gradient(135deg, rgba(52, 211, 153, 0.4), rgba(56, 189, 248, 0.3));
-    z-index: 0;
-}
+    z-index: 0; }
 
 #contact > * {
     position: relative;
-    z-index: 1;
-}
+    z-index: 1; }
 
 #contact h2 {
     font-size: 3rem;
@@ -284,15 +254,13 @@ nav ul li a:hover {
     background-clip: text;
     margin-bottom: 20px;
     font-weight: 800;
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.15));
-}
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.15)); }
 
 .contact-subtitle {
     font-size: 1.2rem;
     color: #1f2937;
     margin-bottom: 50px;
-    font-weight: 500;
-}
+    font-weight: 500; }
 
 .contact-form {
     max-width: 650px;
@@ -302,20 +270,17 @@ nav ul li a:hover {
     border-radius: 20px;
     box-shadow: 0 15px 40px rgba(5, 150, 105, 0.3);
     backdrop-filter: blur(20px);
-    border: 2px solid rgba(129, 199, 132, 0.4);
-}
+    border: 2px solid rgba(129, 199, 132, 0.4); }
 
 .form-group {
-    margin-bottom: 25px;
-}
+    margin-bottom: 25px; }
 
 .contact-form label {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
     color: #1f2937;
-    font-size: 0.95rem;
-}
+    font-size: 0.95rem; }
 
 .contact-form input,
 .contact-form textarea {
@@ -327,26 +292,22 @@ nav ul li a:hover {
     transition: all 0.3s ease;
     font-family: inherit;
     background: rgba(255, 255, 255, 0.85);
-    color: #1f2937;
-}
+    color: #1f2937; }
 
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
-    color: rgba(75, 85, 99, 0.6);
-}
+    color: rgba(75, 85, 99, 0.6); }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
     outline: none;
     border-color: #10b981;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-    background: rgba(255, 255, 255, 0.95);
-}
+    background: rgba(255, 255, 255, 0.95); }
 
 .contact-form textarea {
     resize: vertical;
-    min-height: 120px;
-}
+    min-height: 120px; }
 
 .submit-button {
     background: linear-gradient(135deg, #10b981, #14b8a6);
@@ -359,14 +320,12 @@ nav ul li a:hover {
     font-size: 1.1rem;
     width: 100%;
     transition: all 0.3s ease;
-    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
-}
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3); }
 
 .submit-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4);
-    background: linear-gradient(135deg, #059669, #0d9488);
-}
+    background: linear-gradient(135deg, #059669, #0d9488); }
 
 /* ---------- Footer ---------- */
 footer {
@@ -374,108 +333,82 @@ footer {
     padding: 40px 20px;
     background: linear-gradient(135deg, #047857, #0891b2);
     color: #fff;
-    font-size: 1rem;
-}
+    font-size: 1rem; }
 
 footer p {
     margin: 0;
-    opacity: 0.9;
-}
+    opacity: 0.9; }
 
 /* ---------- Animations ---------- */
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(40px);
-    }
+        transform: translateY(40px); }
     to {
         opacity: 1;
-        transform: translateY(0);
-    }
-}
+        transform: translateY(0); }}
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1024px) {
     .team-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-    }
+        gap: 30px; }
     
     header {
-        padding: 0 40px;
-    }
+        padding: 0 40px; }
     
     nav ul {
-        gap: 30px;
-    }
-}
+        gap: 30px; }}
 
 @media (max-width: 768px) {
     header {
         padding: 0 20px;
-        height: 70px;
-    }
+        height: 70px; }
     
     .logo-text {
-        font-size: 1.1rem;
-    }
+        font-size: 1.1rem; }
     
     nav ul {
-        gap: 20px;
-    }
+        gap: 20px; }
     
     nav ul li a {
-        font-size: 0.9rem;
-    }
+        font-size: 0.9rem; }
     
     .overlay-box {
-        padding: 40px 30px;
-    }
+        padding: 40px 30px; }
     
     .overlay-box h1 {
-        font-size: 2.5rem;
-    }
+        font-size: 2.5rem; }
     
     .overlay-box p {
-        font-size: 1.1rem;
-    }
+        font-size: 1.1rem; }
     
     #about h2,
     #contact h2 {
-        font-size: 2.3rem;
-    }
+        font-size: 2.3rem; }
     
     .team-grid {
-        grid-template-columns: 1fr;
-    }
+        grid-template-columns: 1fr; }
     
     .contact-form {
-        padding: 35px;
-    }
-}
+        padding: 35px; }}
 
 @media (max-width: 600px) {
     nav ul {
-        gap: 15px;
-    }
+        gap: 15px; }
     
     nav ul li a {
-        font-size: 0.85rem;
-    }
+        font-size: 0.85rem; }
     
     .overlay-box h1 {
-        font-size: 2rem;
-    }
+        font-size: 2rem; }
     
     .overlay-box p {
-        font-size: 1rem;
-    }
+        font-size: 1rem; }
     
     .cta-button {
         padding: 14px 30px;
-        font-size: 1rem;
-    }
-}
+        font-size: 1rem; }}
 </style>
 </head>
 
@@ -564,12 +497,12 @@ footer p {
         
         <div class="form-group">
             <label for="phone">Contact Number</label>
-            <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000">
+            <input type="tel" id="phone" name="phone" placeholder="+91 XXXXX-XXXXX">
         </div>
         
         <div class="form-group">
             <label for="need">How can we help?</label>
-            <input type="text" id="need" name="need" placeholder="Brief description of your inquiry">
+            <input type="text" id="need" name="need" placeholder="Brief description of your inquiry/Suggestion">
         </div>
         
         <div class="form-group">
