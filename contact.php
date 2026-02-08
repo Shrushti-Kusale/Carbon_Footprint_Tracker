@@ -11,8 +11,8 @@ if(isset($_POST['send'])){
     $user_id = $_SESSION['user']['id'] ?? null;
     
     if($rating && $user_id){
-        $stmt = $conn->prepare("INSERT INTO feedback (user_id, rating, message, created_at) VALUES (?, ?, ?, NOW())");
-        $stmt->bind_param("iis", $user_id, $rating, $msg);
+        $stmt = $conn->prepare("INSERT INTO feedback (id, message, created_at, rating) VALUES (?, ?, ?, NOW())");
+        $stmt->bind_param("iis", $id, $msg, $rating);
         
         if($stmt->execute()){
             $success = true;
