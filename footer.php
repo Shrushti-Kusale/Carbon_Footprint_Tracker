@@ -132,6 +132,7 @@ border:none;
 cursor:pointer;
 }
 
+/* ===== DARKER QUICK BUTTONS ===== */
 #quickBtns{
 display:flex;
 gap:6px;
@@ -144,15 +145,18 @@ background:#fff;
 flex:1;
 border:none;
 padding:8px;
-background:#e8f5e9;
+background:#81c784;
+color:#08310c;
 cursor:pointer;
 border-radius:8px;
 font-size:12px;
 transition:.2s;
+font-weight:600;
 }
 
 #quickBtns button:hover{
-background:#c8e6c9;
+background:#4caf50;
+color:#fff;
 }
 </style>
 
@@ -171,6 +175,7 @@ background:#c8e6c9;
         <button onclick="quickAsk('my emission')">My Footprint</button>
         <button onclick="quickAsk('reduce')">Reduce Tips</button>
         <button onclick="quickAsk('tips')">Eco Tips</button>
+        <button onclick="quickAsk('help')">How to Use</button>
     </div>
 
     <div id="chat-input">
@@ -184,28 +189,40 @@ background:#c8e6c9;
 let userEmission = <?= $userEmission ?>;
 let chat = document.getElementById("chat-messages");
 
-/* ===== EcoTrace Welcome + Personalized Greeting ===== */
+/* ===== Welcome Message ===== */
 let intro =
-`👋 <b>Welcome to EcoTrace Chatbot!</b><br>
-I'm your eco assistant helping you track and reduce your carbon footprint.<br><br>`;
+`👋 <b>Welcome to EcoTrace!</b><br>
+I help you track and reduce your carbon footprint.<br><br>
+You can:<br>
+• Calculate emissions<br>
+• View history reports<br>
+• Get eco tips<br>
+• Reduce CO₂ emissions<br>
+Type <b>help</b> anytime to learn how to use the website.<br><br>`;
 
 let welcome = "";
 
-if(userEmission > 20)
+if(userEmission == 0){
 welcome = intro +
-`Your latest carbon footprint is <b>${userEmission} kg CO₂/day</b>.<br>
-⚠ This is higher than recommended.<br>
-Ask me how to reduce emissions!`;
-
-else if(userEmission > 10)
+`Looks like you're new!<br>
+Start by calculating your carbon footprint.<br>
+Type <b>help</b> to learn how the website works.`;
+}
+else if(userEmission > 20){
+welcome = intro +
+`Your latest footprint is <b>${userEmission} kg CO₂/day</b>.<br>
+⚠ Higher than recommended. Ask how to reduce emissions!`;
+}
+else if(userEmission > 10){
 welcome = intro +
 `Your footprint is <b>${userEmission} kg CO₂/day</b>.<br>
 You're doing okay, but we can improve it together.`;
-
-else
+}
+else{
 welcome = intro +
 `🌱 Awesome! Your footprint is only <b>${userEmission} kg CO₂/day</b>.<br>
-Keep up the eco-friendly lifestyle! Want more tips?`;
+Keep up the eco-friendly lifestyle!`;
+}
 
 chat.innerHTML =
 `<div class="msg msg-bot">${welcome}</div>`;
@@ -278,37 +295,54 @@ if(t) t.remove();
 function botReply(msg){
 msg=msg.toLowerCase();
 
+if(msg.includes("help") || msg.includes("how to use") || msg.includes("website")){
+return `
+<b>🌍 How to use EcoTrace</b><br><br>
+1️⃣ Calculate Footprint<br>
+Enter transport & electricity usage.<br><br>
+2️⃣ View History<br>
+Track emission records in dashboard.<br><br>
+3️⃣ Get Reduction Tips<br>
+Ask "reduce tips" anytime.<br><br>
+4️⃣ Track Progress<br>
+Reduce emissions over time.<br><br>
+Try asking:<br>
+• my emission<br>
+• reduce tips<br>
+• eco tips`;
+}
+
 if(msg.includes("my emission") || msg.includes("footprint")){
-    if(userEmission > 20)
-        return `Your footprint is ${userEmission} kg CO₂/day. Level: HIGH.`;
-    if(userEmission > 10)
-        return `Your footprint is ${userEmission} kg CO₂/day. Level: MODERATE.`;
-    return `Your footprint is ${userEmission} kg CO₂/day. Level: LOW. Great!`;
+if(userEmission > 20)
+return `Your footprint is ${userEmission} kg CO₂/day. Level: HIGH.`;
+if(userEmission > 10)
+return `Your footprint is ${userEmission} kg CO₂/day. Level: MODERATE.`;
+return `Your footprint is ${userEmission} kg CO₂/day. Level: LOW. Great!`;
 }
 
 if(msg.includes("reduce")){
-    if(userEmission>20)
-        return "Reduce AC use, avoid private cars, and save electricity.";
-    if(userEmission>10)
-        return "Try reducing transport or electricity usage.";
-    return "You're doing great! Maintain eco-friendly habits.";
+if(userEmission>20)
+return "Reduce AC use, avoid private cars, and save electricity.";
+if(userEmission>10)
+return "Try reducing transport or electricity usage.";
+return "You're doing great! Maintain eco-friendly habits.";
 }
 
 if(msg.includes("tips"))
-    return "Use LED bulbs, public transport, reduce waste, and save energy.";
+return "Use LED bulbs, public transport, reduce waste, and save energy.";
 
 if(msg.includes("carbon"))
-    return "Carbon footprint measures CO₂ emissions from daily activities.";
+return "Carbon footprint measures CO₂ emissions from daily activities.";
 
 if(msg.includes("electricity"))
-    return "Turn off unused appliances and use energy-saving devices.";
+return "Turn off unused appliances and use energy-saving devices.";
 
 if(msg.includes("transport"))
-    return "Public transport or cycling reduces emissions.";
+return "Public transport or cycling reduces emissions.";
 
 if(msg.includes("hello") || msg.includes("hi"))
-    return "Hello! Ask me about emissions or reduction tips.";
+return "Hello! Ask me about emissions or reduction tips.";
 
-return "Ask about your emissions or how to reduce them!";
+return "Ask about emissions, tips, or type 'help' to learn how to use EcoTrace.";
 }
 </script>
